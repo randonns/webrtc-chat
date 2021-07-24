@@ -1,0 +1,21 @@
+{
+  "name": "webrtc-chat-client",
+  "version": "0.1.0",
+  "scripts": {
+    "dev": "vite",
+    "build": "vue-tsc --noEmit && vite build",
+    "serve": "vite preview"
+  },
+  "devDependencies": {
+    "@types/bootstrap": "^5.0.17",
+    "@vitejs/plugin-vue": "^1.2.5",
+    "@vue/compiler-sfc": "^3.1.5",
+    "typescript": "^4.3.5",
+    "vite": "^2.4.3",
+    "vue-tsc": "^0.2.2"
+  },
+  "dependencies": {
+    "@harlem/core": "^1.3.2",
+    "bootstrap": "^5.0.2"
+  }
+}

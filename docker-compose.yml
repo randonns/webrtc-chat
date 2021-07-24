@@ -1,0 +1,32 @@
+version: "3.9"
+
+services:
+  server:
+    build:
+      context: ./docker
+      target: server-dev
+    labels:
+      - traefik.http.routers.server.rule=PathPrefix(`/signaling`)
+    volumes:
+      - ./server:/server
+    restart: always
+
+  client:
+    build:
+      context: ./docker
+      target: client-dev
+    labels:
+      - traefik.http.routers.client.rule=PathPrefix(`/`)
+    volumes:
+      - ./client:/client
+    restart: always
+
+  proxy:
+    image: traefik:2.4
+    command: --api.insecure=true --providers.docker
+    ports:
+      - "80:80"
+      - "8080:8080"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    restart: always
