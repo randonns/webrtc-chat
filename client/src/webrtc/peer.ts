@@ -1,6 +1,6 @@
 // Google의 public STUN server를 사용한다.
 const config = {
-  iceServers: [{ urls: "stun:stun.1.google.com:19302" }]
+  iceServers: [{ urls: "stun:stun.l.google.com:19302" }]
 }
 
 export class PeerConnection {
