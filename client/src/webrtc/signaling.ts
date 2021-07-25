@@ -83,6 +83,7 @@ export default class Signaling {
   }
 
   async onCandidateMessage(candidate: RTCIceCandidate, from: string): Promise<void> {
+    console.log(`Candidate from ${from}:`, candidate)
     // Peer 찾기
     const peer = peers.find(_ => _.userId === from)
     if (peer) await peer.connection.addIceCandidate(candidate)
