@@ -41,9 +41,12 @@ export default class Signaling {
     }
   }
 
-  createConnection(userId: string): PeerConnection {
+  createConnection(targetUserId: string): PeerConnection {
     const con = new PeerConnection()
-    con.onReady = () => setReady(userId)
+    con.onIceCandidate = candidate => {
+      this.socket.send(JSON.stringify({ type: "candidate", payload: candidate, from: this.userId, to: targetUserId }))
+    }
+    con.onReady = () => setReady(targetUserId)
     con.onMessage = (from, msg) => {
       addMessage({ userId: from, message: msg })
     }
@@ -59,9 +62,6 @@ export default class Signaling {
     // 따라서 처음 접속한 Peer는 Offer를 보내지 않는다.
     for (const to of users) {
       const con = this.createConnection(to)
-      con.onIceCandidate = candidate => {
-        this.socket.send(JSON.stringify({ type: "candidate", payload: candidate, from: userId, to }))
-      }
       const offer = await con.createOffer()
       this.socket.send(JSON.stringify({ type: "offer", payload: offer, from: userId, to }))
       add({ userId: to, connection: con, ready: false })
