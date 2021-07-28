@@ -16,6 +16,10 @@ export class PeerConnection {
     this.connection.onicecandidate = ({ candidate }) => {
       if (candidate) this.onIceCandidate?.(candidate)
     }
+
+    this.connection.onicecandidateerror = error => {
+      console.error("CANDIDATE ERROR", error)
+    }
   }
 
   setupChannel(channel: RTCDataChannel): void {
